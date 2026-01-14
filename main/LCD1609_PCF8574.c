@@ -22,10 +22,10 @@ void lcd_send_cmd (char cmd)
 	uint8_t data_t[4];
 	data_u = (cmd&0xf0);
 	data_l = ((cmd<<4)&0xf0);
-	data_t[0] = data_u|0x0C;  //en=1, rs=0
-	data_t[1] = data_u|0x08;  //en=0, rs=0
-	data_t[2] = data_l|0x0C;  //en=1, rs=0
-	data_t[3] = data_l|0x08;  //en=0, rs=0
+	data_t[0] = data_u | 0x0C;	// led+=1, en=1, rw=0, rs=0
+	data_t[1] = data_u | 0x08;	// led+=1, en=0, rw=0, rs=0
+	data_t[2] = data_l | 0x0C;	// led+=1, en=1, rw=0, rs=0
+	data_t[3] = data_l | 0x08;	// led+=1, en=0, rw=0, rs=0
 	err = i2c_master_write_to_device(I2C_NUM, SLAVE_ADDRESS_LCD, data_t, 4, 1000);
 	if (err!=0) ESP_LOGI(TAG, "Error in sending command");
 }
@@ -36,10 +36,10 @@ void lcd_send_data (char data)
 	uint8_t data_t[4];
 	data_u = (data&0xf0);
 	data_l = ((data<<4)&0xf0);
-	data_t[0] = data_u|0x0D;  //en=1, rs=0
-	data_t[1] = data_u|0x09;  //en=0, rs=0
-	data_t[2] = data_l|0x0D;  //en=1, rs=0
-	data_t[3] = data_l|0x09;  //en=0, rs=0
+	data_t[0] = data_u | 0x0D;	// led+=1, en=1, rw=0, rs=1
+	data_t[1] = data_u | 0x09;	// led+=1, en=0, rw=0, rs=1
+	data_t[2] = data_l | 0x0D;	// led+=1, en=1, rw=0, rs=1
+	data_t[3] = data_l | 0x09;	// led+=1, en=0, rw=0, rs=1
 	err = i2c_master_write_to_device(I2C_NUM, SLAVE_ADDRESS_LCD, data_t, 4, 1000);
 	if (err!=0) ESP_LOGI(TAG, "Error in sending data");
 }
